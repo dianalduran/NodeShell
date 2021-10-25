@@ -1,12 +1,20 @@
-const pwd = require("./pwd");
 process.stdout.write("prompt > ");
 
 process.stdin.on("data", (data) => {
-  const cmd = data.toString().trim();
+  const entry = data.toString().trim();
+  const [command, fileName] = entry.split(" ");
 
-  if (cmd === "pwd") {
-    pwd();
+  switch (command) {
+    case "pwd":
+      require("./pwd")();
+      break;
+    case "ls":
+      require("./ls");
+      break;
+    case "cat":
+      require("./cat")(fileName);
+      break;
+    default:
+      process.stdout.write(" command does not exist");
   }
-  process.stdout.write("You typed: " + cmd);
-  process.stdout.write("\nprompt > ");
 });
